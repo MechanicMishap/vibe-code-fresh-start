@@ -1,105 +1,80 @@
-# AI Project Kickstarter
+# Vibe Code Fresh Start
 
-A beginner-friendly template for starting new AI-powered coding projects. This repository helps you set up everything you need to start coding with AI assistance.
+A simple starting point for building AI-powered projects. This template helps you plan and organize your project before diving into code.
 
-## Purpose
+## What's This For?
 
-This repository gives you a ready-to-use starting point for AI coding projects. It includes:
+This repository helps you:
+- Plan your project properly before coding
+- Keep your documentation organized
+- Work efficiently with AI tools
+- Follow best practices from the start
 
-- All the necessary folders and files to get started
-- Templates for planning your project
-- Settings for the Cursor AI coding assistant
-- Best practices for working with AI
+## What's Included
 
-## Getting Started
+### 📝 Documentation Templates
+The `docs` folder contains templates to help you plan your project:
+- Product Requirements - What are you building and why?
+- User Requirements - Who will use it and how?
+- Software Requirements - How should it be built?
 
-### 1. Project Planning
-First, create your project requirements using the templates in the `docs` folder:
-   - Start with the Product Requirements Document (PRD) to define what you're building
-   - Then create the User Requirements Document (URD) to describe who will use it
-   - Finally, make the Software Requirements Specification (SRS) to plan how to build it
+### 🤖 AI Assistant Rules
+The `.cursor` folder contains guidelines that help AI tools understand:
+- How to help with your specific type of project
+- Best practices to follow
+- Common patterns and solutions
 
-### 2. Basic Setup
-Make sure you have these installed on your computer:
-   - [Node.js](https://nodejs.org/) (version 18 or higher)
-   - [Cursor IDE](https://cursor.sh/)
-   - [Git](https://git-scm.com/)
+## How to Use This Template
 
-### 3. Install Project Tools
-Open your terminal and run:
-```bash
-# Install all the tools the project needs
-npm install
-```
+1. **Start with Planning**
+   - Use the templates in `docs` to write down your project ideas
+   - Take time to think through what you want to build
+   - Plan out who will use it and how
+   - Fill out your project requirements in the documentation files
 
-### 4. Cursor IDE Setup
-1. Open the project in Cursor IDE
-2. Look through the `.cursor/rules` folder to see how AI will help you
-3. You can customize these rules for your specific project
+2. **Set Up Project Documentation**
+   - Complete the Product Requirements Document (what you're building)
+   - Write the User Requirements Document (who will use it)
+   - Create the Software Requirements Specification (how to build it)
+   - Set the project docs rule to "always" in `.cursor/rules/use-project-docs.mdc`
 
-## Complete Project Structure
+3. **Configure AI Assistance**
+   - Look through the `.cursor/rules` to understand how AI can help
+   - Customize these rules for your specific needs
+   - Add new rules as your project grows
+
+4. **Begin Building**
+   - Once you have a clear plan, start building your project
+   - Use the AI assistance to help guide you
+   - Keep your documentation updated as you progress
+
+## Project Structure
 
 ```
 .
-├── src/                           # Your code goes here
-│   └── index.ts                   # Main entry point
+├── docs/                                    # Your project planning docs
+│   ├── 00-project-setup-prompts.md         # Initial setup guidelines
+│   ├── 01-product-requirements-document.md  # What you're building
+│   ├── 02-user-requirements-document.md     # Who will use it
+│   └── 03-software-requirements-specification.md  # How to build it
 │
-├── dist/                          # Compiled code (created automatically)
+├── .cursor/                                 # AI assistant rules
+│   └── rules/                              # Different types of rules
+│       ├── backend/                        # Backend development rules
+│       ├── frontend/                       # Frontend development rules
+│       ├── specialized/                    # Special task rules
+│       └── use-project-docs.mdc            # Project documentation rules
 │
-├── docs/                          # Project documentation
-│   ├── 00-project-setup-prompts.md    # AI prompts for setup
-│   ├── 01-product-requirements.md      # What you're building
-│   ├── 02-user-requirements.md         # Who will use it
-│   └── 03-software-requirements.md     # How to build it
-│
-├── .cursor/                       # Cursor IDE settings
-│   └── rules/                     # AI behavior rules
-│       ├── backend/              # Rules for backend code
-│       ├── frontend/             # Rules for frontend code
-│       └── specialized/          # Rules for specific tasks
-│
-└── package.json                   # Project settings and tools
+└── [your project folders]                   # Where you'll add your code
 ```
 
-## Development
+## Contributing
 
-Here's how to work on your project:
-
-- Type `npm run dev` in the terminal to start development mode
-  - This will automatically update your code as you make changes
-- Type `npm run build` to create the final version of your code
-- Type `npm run clean` to remove any old compiled files
-
-## Cursor IDE Features
-
-This project comes with pre-configured AI assistance for:
-- Building websites (Next.js, React, TypeScript)
-- Creating servers (Node.js, MongoDB)
-- Working with data
-- Connecting to AI services (OpenAI, Convex)
-- Writing documentation
-
-## Main Tools Used
-
-- **For Websites**: Next.js, React, TypeScript, Shadcn UI
-- **For Servers**: Node.js, Express
-- **For AI**: OpenAI, Convex
-- **For Development**: Cursor IDE, GitHub
-
-## How to Start Coding
-
-1. Read through the documentation in the `docs` folder
-2. Look at the AI rules in `.cursor/rules` to see how they can help
-3. Follow the setup steps above
-4. Start writing code with AI assistance in Cursor
-
-## Want to Help?
-
-We welcome contributions! If you have ideas to make this starter kit better, please feel free to:
-1. Fork the project
-2. Make your changes
-3. Submit a pull request
+Have ideas to make this template better? We'd love your help! Feel free to:
+- Suggest improvements
+- Share your experience
+- Submit changes
 
 ## License
 
-This project is free to use under the MIT License - see the LICENSE file for details. 
+This project is available under the MIT License - use it freely for your own projects! 
