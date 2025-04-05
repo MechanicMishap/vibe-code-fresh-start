@@ -1,0 +1,10 @@
+---
+description: Rules when writing code for any part of our project
+globs: 
+---
+Reference the project documentation to guide your work towards the desired. 
+
+Within our project folder we have a docs folder that contains details of our project: 
+[01-product-requirements-document.md](mdc:docs/01-product-requirements-document.md)
+[02-user-requirements-document.md](mdc:docs/02-user-requirements-document.md)
+[03-software-requirements-specification.md](mdc:docs/03-software-requirements-specification.md)

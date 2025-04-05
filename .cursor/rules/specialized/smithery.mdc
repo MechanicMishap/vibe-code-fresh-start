@@ -1,0 +1,167 @@
+---
+description: When using Smithery
+globs: 
+alwaysApply: false
+---
+SMITHERY DEVELOPMENT GUIDELINES
+
+CORE PRINCIPLES:
+1. Always use environment variables for API keys and sensitive configuration
+2. Implement proper error handling for all Smithery operations
+3. Follow TypeScript best practices with strict type checking
+4. Use async/await for all asynchronous operations
+5. Implement graceful connection handling and reconnection logic
+
+BEST PRACTICES:
+1. Server Discovery:
+   - Always validate server availability before connecting
+   - Cache server details when appropriate
+   - Implement retry logic for failed server lookups
+   - Use semantic search for finding appropriate servers
+
+2. Connection Management:
+   - Implement connection timeouts (recommended: 60s)
+   - Handle WebSocket reconnection automatically
+   - Clean up resources on connection close
+   - Monitor connection health with heartbeats
+
+3. Error Handling:
+   - Handle common errors:
+     * Connection timeout
+     * Authentication failure
+     * Invalid configuration
+     * Server unavailable
+   - Implement exponential backoff for retries
+   - Log errors appropriately for debugging
+
+4. Security:
+   - Store keys in .env files
+   - Use environment variables
+   - Rotate keys periodically
+   - Never commit keys to version control
+   - Validate SSL/TLS certificates
+   - Use secure WebSocket connections (wss://)
+   - Implement rate limiting
+   - Monitor for suspicious activity
+
+RECOMMENDED IMPLEMENTATION PATTERN:
+```typescript
+import { WebSocketClientTransport } from "@modelcontextprotocol/sdk/client/websocket.js"
+import { createSmitheryUrl } from "@smithery/sdk/config.js"
+import { SmitheryError } from "@smithery/sdk/errors.js"
+
+interface ServerConfig {
+  timeout?: number;
+  retryAttempts?: number;
+  // Add server-specific config
+}
+
+async function connectToServer(
+  qualifiedName: string,
+  config: ServerConfig
+): Promise<WebSocketClientTransport> {
+  try {
+    const url = createSmitheryUrl(
+      `https://server.smithery.ai/${qualifiedName}/ws`,
+      config
+    );
+    const transport = new WebSocketClientTransport(url, {
+      timeout: config.timeout || 60000,
+      onError: handleConnectionError,
+      onClose: handleConnectionClose,
+    });
+    await transport.connect();
+    return transport;
+  } catch (error) {
+    if (error instanceof SmitheryError) {
+      // Handle Smithery-specific errors
+    }
+    throw error;
+  }
+}
+```
+
+-----------------
+OFFICIAL SMITHERY REGISTRY API DOCUMENTATION
+
+PURPOSE: Programmatic access to search and obtain launch configurations for Model Context Protocol (MCP) servers.
+
+AUTHENTICATION:
+- Required: Bearer token in Authorization header
+- Format: "Authorization: Bearer your-api-token"
+- Obtain token: User profile > API keys
+
+ENDPOINTS:
+
+1. LIST SERVERS
+   URL: GET https://registry.smithery.ai/servers
+   QUERY PARAMETERS:
+   - q: Search query (semantic search)
+   - page: Page number (default: 1)
+   - pageSize: Items per page (default: 10)
+   
+   FILTERING SYNTAX:
+   - Text search: "machine learning"
+   - Owner filter: owner:username
+   - Repository filter: repo:repository-name
+   - Deployment status: is:deployed
+   - Combined example: "owner:smithery-ai repo:fetch is:deployed machine learning"
+   
+   RESPONSE SCHEMA:
+   {
+     servers: Array<{
+       qualifiedName: string;
+       displayName: string;
+       description: string;
+       homepage: string;
+       useCount: string;
+       isDeployed: boolean;
+       createdAt: string;
+     }>;
+     pagination: {
+       currentPage: number;
+       pageSize: number;
+       totalPages: number;
+       totalCount: number;
+     };
+   }
+
+2. GET SERVER
+   URL: GET https://registry.smithery.ai/servers/{qualifiedName}
+   
+   RESPONSE SCHEMA:
+   {
+     qualifiedName: string;
+     displayName: string;
+     deploymentUrl: string;
+     connections: Array<{
+       type: string;
+       url?: string;
+       configSchema: JSONSchema;
+     }>;
+   }
+
+WEBSOCKET CONNECTION:
+- URL Format: https://server.smithery.ai/${qualifiedName}/ws?config=${base64encode(config)}
+- Config must comply with server's configSchema
+- Config is base64-encoded JSON
+
+TYPESCRIPT SDK USAGE:
+
+```typescript
+import { WebSocketClientTransport } from "@modelcontextprotocol/sdk/client/websocket.js"
+import { createSmitheryUrl } from "@smithery/sdk/config.js"
+const url = createSmitheryUrl(
+"https://your-smithery-mcp-server/ws",
+{
+// config object matching schema
+},
+)
+const transport = new WebSocketClientTransport(url)
+```
+
+CONCEPTS:
+- Smithery Registry indexes MCP servers
+- Servers have configuration schemas defining connection requirements
+- Connection types: "ws" (WebSocket) or "stdio"
+- API is under development and may change
